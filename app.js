@@ -31,11 +31,16 @@ app.get("/", (req, res) => {
       const selectList = spendList.filter((spend) => {
         return spend.category === categoryValue;
       });
-      if (selectList.length) {
+      if (categoryValue.length) {
         spendList = selectList;
       }
 
-      return res.render("index", { spendList, category });
+      let totoalAmount = 0;
+      spendList.forEach((spend) => {
+        totoalAmount += spend.amount;
+      });
+
+      return res.render("index", { spendList, category, totoalAmount });
     })
     .catch((err) => console.log(err));
 });
