@@ -15,6 +15,8 @@ app.set("view engine", "hbs");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
+  const categoryValue = req.query.category || {};
+  const category = categoryValue ? { [categoryValue]: true } : {};
   Expense.aggregate([
     {
       $project: {
@@ -26,7 +28,14 @@ app.get("/", (req, res) => {
     },
   ])
     .then((spendList) => {
-      return res.render("index", { spendList });
+      const selectList = spendList.filter((spend) => {
+        return spend.category === categoryValue;
+      });
+      if (selectList.length) {
+        spendList = selectList;
+      }
+
+      return res.render("index", { spendList, category });
     })
     .catch((err) => console.log(err));
 });
