@@ -22,15 +22,14 @@
               <th class="col-4" scope="row">{{this.category}}{{this.name}}</th>
               <td class="col-4">{{this.formattedDate}}</td>
               <td class="col-4">{{this.amount}}</td>
-              <td class="col-4"><a href="#">Edit</a>
-                <a href="#">Delete</a></td>
+              <td class="col-4">
+                <a href="#">Edit</a>
+                <form action="/{{this._id}}/delete" method="POST">
+                  <button href="/delete">Delete</button>
+                </form>
+              </td>
             </tr>
           {{/each}}
-          <tr class="text-center">
-            <th class="col-4" scope="row">example</th>
-            <td class="col-4">80</td>
-            <td class="col-4"><a href="#">Edit</a> <a href="#">Delete</a></td>
-          </tr>
         </tbody>
       </table>
       <a href="/new" class="btn btn-warning mt-3">New spend</a>

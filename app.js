@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
     },
   ])
     .then((spendList) => {
-      console.log(spendList);
       return res.render("index", { spendList });
     })
     .catch((err) => console.log(err));
@@ -44,6 +43,13 @@ app.post("/new", (req, res) => {
     category,
     amount,
   })
+    .then(() => res.redirect("/"))
+    .catch((err) => console.log(err));
+});
+
+app.post("/:id/delete", (req, res) => {
+  const id = req.params.id;
+  Expense.findOneAndDelete({ id })
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
