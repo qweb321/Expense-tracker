@@ -1,0 +1,47 @@
+<form action="/new" class="col-6 m-auto mt-5" method="POST">
+  <h2 class="text-center mb-3">Enter your spend</h2>
+  <div class="mb-3 row">
+    <label for="name" class="col-sm-2 col-form-label">Name:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="name" name="name" />
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="date" class="col-sm-2 col-form-label">Date:</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" id="date" name="date" />
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="category" class="col-sm-2 col-form-label">Category:</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="category" name="category">
+        <option selected>Select category</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="amount" class="col-sm-2 col-form-label">Amount:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="amount" name="amount" />
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button
+      type="submit"
+      class="btn btn-outline-dark"
+      style="width: 100px"
+    >Add</button>
+  </div>
+</form>
+
+<script>
+  const date = new Date(); 
+  const year = date.getFullYear(); 
+  const month = date.getMonth() + 1; 
+  const day = date.getDate(); 
+  document.getElementById('date').value = year + "-" + month + "-" + day
+</script>

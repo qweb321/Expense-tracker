@@ -17,19 +17,23 @@
       </div>
       <table class="table table-striped">
         <tbody>
+          {{#each spendList}}
+            <tr class="text-center">
+              <th class="col-4" scope="row">{{this.category}}{{this.name}}</th>
+              <td class="col-4">{{this.formattedDate}}</td>
+              <td class="col-4">{{this.amount}}</td>
+              <td class="col-4"><a href="#">Edit</a>
+                <a href="#">Delete</a></td>
+            </tr>
+          {{/each}}
           <tr class="text-center">
-            <th class="col-4" scope="row">lunch</th>
-            <td class="col-4">60</td>
-            <td class="col-4"><a href="#">Edit</a> <a href="#">Delete</a></td>
-          </tr>
-          <tr class="text-center">
-            <th class="col-4" scope="row">dinner</th>
+            <th class="col-4" scope="row">example</th>
             <td class="col-4">80</td>
             <td class="col-4"><a href="#">Edit</a> <a href="#">Delete</a></td>
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-warning mt-3">New spend</button>
+      <a href="/new" class="btn btn-warning mt-3">New spend</a>
     </div>
   </div>
 </div>
