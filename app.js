@@ -1,6 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const Expense = require("./model/amount");
 
 require("./config/mongoose");
@@ -39,10 +40,45 @@ app.post("/new", (req, res) => {
   return Expense.create({
     name,
     date,
-    converDate: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
     category,
     amount,
   })
+    .then(() => res.redirect("/"))
+    .catch((err) => console.log(err));
+});
+
+app.get("/:id", (req, res) => {
+  const id = req.params.id;
+  Expense.aggregate([
+    { $match: { _id: mongoose.Types.ObjectId(id) } },
+    {
+      $project: {
+        name: 1,
+        amount: 1,
+        category: 1,
+        formattedDate: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+      },
+    },
+  ])
+    .then((spend) => {
+      const categoryValue = spend[0].category;
+      const category = categoryValue ? { [categoryValue]: true } : {};
+      res.render("edit", { spend: spend[0], category });
+    })
+    .catch((err) => console.log(err));
+});
+
+app.post("/:id", (req, res) => {
+  const id = req.params.id;
+  const { name, date, category, amount } = req.body;
+  return Expense.findOne({ id })
+    .then((spend) => {
+      spend.name = name;
+      spend.date = date;
+      spend.category = category;
+      spend.amount = amount;
+      return spend.save();
+    })
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
