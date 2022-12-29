@@ -48,7 +48,7 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.post("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const id = req.params.id;
   const { name, date, category, amount } = req.body;
   return Expense.findOne({ id })
@@ -63,7 +63,7 @@ router.post("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.post("/:id/delete", (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Expense.findOneAndDelete({ id })
     .then(() => res.redirect("/"))
