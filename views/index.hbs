@@ -22,15 +22,17 @@
       <table class="table table-striped">
         <tbody>
           {{#each spendList}}
-            <tr class="text-center">
+            <tr class="text-center align-middle">
               <th class="col-4" scope="row">{{this.category}}{{this.name}}</th>
               <td class="col-4">{{this.formattedDate}}</td>
               <td class="col-4">{{this.amount}}</td>
               <td class="col-4">
-                <a href="/{{this._id}}">Edit</a>
-                <form action="/{{this._id}}/delete" method="POST">
-                  <button href="/delete">Delete</button>
-                </form>
+                <div class="d-flex align-middle">
+                  <a href="/{{this._id}}" class="btn btn-sm me-2">Edit</a>
+                  <form action="/{{this._id}}/delete" method="POST" class="m-0">
+                    <button href="/delete" class="btn btn-sm text-danger">Delete</button>
+                  </form>
+                </div>
               </td>
             </tr>
           {{/each}}
