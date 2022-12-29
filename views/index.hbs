@@ -29,7 +29,7 @@
               <td class="col-4">{{this.amount}}</td>
               <td class="col-4">
                 <div class="d-flex align-middle">
-                  <a href="/{{this._id}}" class="btn btn-sm me-2">Edit</a>
+                  <a href="/record/{{this._id}}" class="btn btn-sm me-2">Edit</a>
                   <form action="/{{this._id}}/delete" method="POST" class="m-0">
                     <button href="/delete" class="btn btn-sm text-danger">Delete</button>
                   </form>
@@ -39,7 +39,7 @@
           {{/each}}
         </tbody>
       </table>
-      <a href="/new" class="btn btn-warning mt-3">New spend</a>
+      <a href="/record/new" class="btn btn-warning mt-3">New spend</a>
     </div>
   </div>
 </div>
