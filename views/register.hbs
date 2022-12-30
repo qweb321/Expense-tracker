@@ -2,6 +2,7 @@
   <div class="col-4 m-auto">
     <div class="card card-body mt-3">
       <h2 class="text-center mt-3">Register</h2>
+      {{> message}}
       <form action="/users/register" method="POST">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
@@ -12,7 +13,6 @@
             name="name"
             value="{{name}}"
             placeholder="Enter Name"
-            requried
           />
         </div>
         <div class="mb-3">
@@ -24,7 +24,6 @@
             name="email"
             value="{{email}}"
             placeholder="name@example.com"
-            required
           />
         </div>
         <div class="mb-3">
@@ -36,18 +35,18 @@
             name="password"
             value="{{password}}"
             placeholder="Password"
-            required
           />
         </div>
         <div class="mb-3">
           <label for="confirmPassword" class="form-label">Confirm Password</label>
           <input
-            type="confirmPassword"
+            type="password"
             class="form-control"
             id="confirmPassword"
             name="confirmPassword"
+            value="{{confirmPassword}}"
             placeholder="Confirm"
-            required
+            
           />
         </div>
         <button

@@ -7,27 +7,32 @@ module.exports = (app) => {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy({ usernameField: "email" }, function (
-      email,
-      password,
-      done
-    ) {
-      User.findOne({ email })
-        .then((user) => {
-          if (!user) {
-            return done(null, false, { meassge: " email is not registered" });
-          } else {
-            if (user.password !== password) {
-              return done(null, false, {
-                meassge: "Email or Password is not correct",
-              });
+    new LocalStrategy(
+      { usernameField: "email", passReqToCallback: true },
+      function (req, email, password, done) {
+        User.findOne({ email })
+          .then((user) => {
+            if (!user) {
+              return done(
+                null,
+                false,
+                req.flash("warning_msg", "Email is not registered")
+              );
             } else {
-              return done(null, user);
+              if (user.password !== password) {
+                return done(
+                  null,
+                  false,
+                  req.flash("warning_msg", "Email or Password is not correct")
+                );
+              } else {
+                return done(null, user);
+              }
             }
-          }
-        })
-        .catch((err) => done(err, false));
-    })
+          })
+          .catch((err) => done(err, false));
+      }
+    )
   );
 
   //sessions

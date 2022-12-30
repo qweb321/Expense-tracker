@@ -21,22 +21,42 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
+  const errors = [];
 
-  if (password !== confirmPassword) {
-    console.log("password and confirmPassword is different");
-    return res.render("register", { name, email, password });
+  if (!name || !email || !password || !confirmPassword) {
+    errors.push({ message: "All fields are required." });
   }
-  return User.findOne({ email }).then((user) => {
+  if (password !== confirmPassword) {
+    errors.push({ message: "Password and confirmPassword is different." });
+  }
+  if (errors.length) {
+    console.log(errors);
+    return res.render("register", {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+  }
+  User.findOne({ email }).then((user) => {
     if (user) {
-      console.log("Email already registered");
-      return res.redirect("/users/login");
-    } else {
-      User.create({
+      errors.push({ message: "Email already exists." });
+      return res.render("register", {
+        errors,
         name,
         email,
         password,
+        confirmPassword,
       });
-      return res.redirect("/users/login");
+    } else {
+      return User.create({
+        name,
+        email,
+        password,
+      }).then(() => {
+        res.redirect("/users/login");
+      });
     }
   });
 });
@@ -46,6 +66,7 @@ router.get("/logout", function (req, res, next) {
     if (err) {
       return next(err);
     }
+    req.flash("success_msg", "Logout Successfully");
     res.redirect("/users/login");
   });
 });
