@@ -1,5 +1,6 @@
 const db = require("../../config/mongoose");
 const User = require("../user");
+const bcrypt = require("bcryptjs");
 
 const USER = {
   name: "user1",
@@ -8,10 +9,15 @@ const USER = {
 };
 
 db.once("open", (req, res) => {
-  User.create({
-    name: USER.name,
-    email: USER.email,
-    password: USER.password,
-  });
-  console.log("done");
+  bcrypt
+    .genSalt(10)
+    .then((salt) => bcrypt.hash(USER.password, salt))
+    .then((hash) => {
+      User.create({
+        name: USER.name,
+        email: USER.email,
+        password: hash,
+      });
+      console.log("done");
+    });
 });

@@ -1,5 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const bcrypt = require("bcryptjs");
 const User = require("../model/user");
 
 module.exports = (app) => {
@@ -18,17 +19,17 @@ module.exports = (app) => {
                 false,
                 req.flash("warning_msg", "Email is not registered")
               );
-            } else {
-              if (user.password !== password) {
+            }
+            return bcrypt.compare(password, user.password).then((isMatch) => {
+              if (!isMatch) {
                 return done(
                   null,
                   false,
                   req.flash("warning_msg", "Email or Password is not correct")
                 );
-              } else {
-                return done(null, user);
               }
-            }
+              return done(null, user);
+            });
           })
           .catch((err) => done(err, false));
       }
