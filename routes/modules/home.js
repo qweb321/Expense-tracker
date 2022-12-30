@@ -6,8 +6,9 @@ const dayjs = require("dayjs");
 
 router.get("/", (req, res) => {
   const reqcategory = req.query.category || {};
-
+  const userId = req.user._id;
   let totalAmount = 0;
+
   Category.find()
     .lean()
     .then((categories) => {
@@ -18,7 +19,7 @@ router.get("/", (req, res) => {
         }
       });
 
-      Expense.find()
+      Expense.find({ userId })
         .lean()
         .populate("category")
         .then((spendList) => {

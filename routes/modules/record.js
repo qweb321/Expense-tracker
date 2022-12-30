@@ -13,24 +13,27 @@ router.get("/new", (req, res) => {
 });
 
 router.post("/new", (req, res) => {
+  const userId = req.user._id;
   const { name, date, category, amount } = req.body;
   return Expense.create({
     name,
     date,
     category,
     amount,
+    userId,
   })
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
 
 router.get("/:id", (req, res) => {
+  const userId = req.user._id;
   const _id = req.params.id;
 
   Category.find()
     .lean()
     .then((categories) => {
-      Expense.findOne({ _id })
+      Expense.findOne({ _id, userId })
         .lean()
         .then((spend) => {
           spend.date = dayjs(spend.date).format("YYYY-MM-DD");
@@ -49,9 +52,10 @@ router.get("/:id", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  const id = req.params.id;
+  const userId = req.user._id;
+  const _id = req.params.id;
   const { name, date, category, amount } = req.body;
-  return Expense.findOne({ id })
+  return Expense.findOne({ _id, userId })
     .then((spend) => {
       spend.name = name;
       spend.date = date;
@@ -64,8 +68,9 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  Expense.findOneAndDelete({ id })
+  const userId = req.user._id;
+  const _id = req.params.id;
+  Expense.findOneAndDelete({ _id, userId })
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
