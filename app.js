@@ -26,6 +26,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 usePassport(app);
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user; //from passport deserializeUser
+  next();
+});
+
 app.use(routes);
 
 app.listen(port, () => {

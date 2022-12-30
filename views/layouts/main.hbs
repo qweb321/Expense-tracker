@@ -13,8 +13,14 @@
     {{! navbar }}
     <nav class="navbar bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">家庭記帳本</a>
-        <a class="btn btn-outline-dark me-3" href="/users/logout">Logout</a>
+        <a class="navbar-brand" href="/">
+          {{#if user}}{{user.name}}'s{{/if}}
+          家庭記帳本</a>
+        {{#if isAuthenticated}}
+          <a class="btn btn-outline-dark me-3" href="/users/logout">Logout</a>
+        {{else}}
+          <a class="btn btn-outline-dark me-3" href="/users/login">Login</a>
+        {{/if}}
       </div>
     </nav>
     {{{body}}}
