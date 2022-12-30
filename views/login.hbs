@@ -1,0 +1,39 @@
+<div class="row mt-5">
+  <div class="col-4 m-auto">
+
+    <div class="card card-body mt-3">
+      <h2 class="text-center mt-3">Login</h2>
+      <form action="/users/login" method="POST">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="name@example.com"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="password"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="width: 100%;"
+        >Login</button>
+      </form>
+      <p class="lead mt-3">
+        No Account?
+        <a href="/users/register">Register</a>
+      </p>
+    </div>
+  </div>
+</div>
