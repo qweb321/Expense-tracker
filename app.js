@@ -18,5 +18,5 @@ app.use(methodOverride("_method"));
 app.use(routes);
 
 app.listen(port, () => {
-  console.log(`app is running on http://localhost:${port}`);
+  console.log(`app is running on http://localhost:${port}/users/login`);
 });
