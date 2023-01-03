@@ -10,8 +10,10 @@ const CATEGORIES = [
 ];
 
 db.once("open", (req, res) => {
-  Category.insertMany(CATEGORIES).then(() => {
-    console.log("done!");
-    process.exit();
-  });
+  Category.insertMany(CATEGORIES)
+    .then(() => {
+      console.log("done!");
+      process.exit();
+    })
+    .catch((err) => console.log(err));
 });

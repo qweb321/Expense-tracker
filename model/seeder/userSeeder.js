@@ -24,8 +24,10 @@ db.once("open", (req, res) => {
           });
         });
     })
-  ).then(() => {
-    console.log("done!");
-    process.exit();
-  });
+  )
+    .then(() => {
+      console.log("done!");
+      process.exit();
+    })
+    .catch((err) => console.log(err));
 });

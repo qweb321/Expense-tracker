@@ -9,6 +9,9 @@ const usePassport = require("./config/passport");
 
 require("./config/mongoose");
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const port = 3000;
 const app = express();
 
