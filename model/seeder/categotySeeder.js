@@ -1,17 +1,17 @@
 const Category = require("../category");
 const db = require("../../config/mongoose");
 
-const CATEGORY = {
-  家居物業: "fa-solid fa-house",
-  交通出行: "fa-solid fa-van-shuttle",
-  休閒娛樂: "fa-solid fa-face-grin-beam",
-  餐飲食品: "fa-solid fa-utensils",
-  其他: "fa-solid fa-pen",
-};
+const CATEGORIES = [
+  { name: "家居物業", iconUrl: "fa-solid fa-house" },
+  { name: "交通出行", iconUrl: "fa-solid fa-van-shuttle" },
+  { name: "休閒娛樂", iconUrl: "fa-solid fa-face-grin-beam" },
+  { name: "餐飲食品", iconUrl: "fa-solid fa-utensils" },
+  { name: "其他", iconUrl: "fa-solid fa-pen" },
+];
 
 db.once("open", (req, res) => {
-  for (key in CATEGORY) {
-    Category.create({ name: key, iconUrl: CATEGORY[key] });
-  }
-  console.log("done");
+  Category.insertMany(CATEGORIES).then(() => {
+    console.log("done!");
+    process.exit();
+  });
 });
