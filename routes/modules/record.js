@@ -14,12 +14,22 @@ router.get("/new", (req, res) => {
 
 router.post("/new", (req, res) => {
   const userId = req.user._id;
-  const { name, date, category, amount } = req.body;
+  const { name, date, category, amount } = req.body
+ 
+  if (amount < 0 ) {
+    req.flash('warning_msg', "Amount can not less than zero")
+    return res.redirect('back')
+  } 
+  if (isNaN(amount)) {
+    req.flash('warning_msg', "Amount only can enter number")
+    return res.redirect('back')
+  }
+ 
   return Expense.create({
     name,
     date,
     category,
-    amount,
+    amount: Math.ceil(amount),
     userId,
   })
     .then(() => res.redirect("/"))
@@ -55,6 +65,15 @@ router.put("/:id", (req, res) => {
   const userId = req.user._id;
   const _id = req.params.id;
   const { name, date, category, amount } = req.body;
+  if (amount < 0 ) {
+    req.flash('warning_msg', "Amount can not less than zero")
+    return res.redirect('back')
+  } 
+  if(isNaN(amount)) {
+    req.flash('warning_msg', "Amount only can enter number")
+    return res.redirect('back')
+  }
+
   return Expense.findOne({ _id, userId })
     .then((spend) => {
       spend.name = name;

@@ -1,5 +1,6 @@
 <form action="/record/new" class="col-6 m-auto mt-5" method="POST">
   <h2 class="text-center mb-3">Enter your spend</h2>
+  {{> message}}
   <div class="mb-3 row">
     <label for="name" class="col-sm-2 col-form-label">Name:</label>
     <div class="col-sm-10">
@@ -31,6 +32,7 @@
         class="form-control"
         id="amount"
         name="amount"
+        min="0"
         required
       />
     </div>
